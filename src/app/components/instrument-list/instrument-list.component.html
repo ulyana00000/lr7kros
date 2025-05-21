@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="animated-title">Магазин інструментів</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="ion-padding">
+  <app-instrument-form (addInstrument)="addInstrumentToList($event)"></app-instrument-form>
+
+  <!-- Кнопка-перемикач -->
+  <ion-button expand="block" color="warning" (click)="showEditor = !showEditor">
+    ✏️ {{ showEditor ? 'Сховати редагування' : 'Редагувати інструменти' }}
+  </ion-button>
+
+  <app-instrument-edit
+  *ngIf="instruments.length"
+  [instruments]="instruments"
+  (updateInstrument)="onInstrumentUpdated($event)">
+</app-instrument-edit>
+
+
+  <!-- Список інструментів -->
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-md="6" size-lg="4" *ngFor="let instr of instruments">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{ instr.getName() }}</ion-card-title>
+            <ion-card-subtitle>{{ instr.getType() }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <p><strong>Ціна:</strong> {{ instr.getPrice() }} грн</p>
+            <p><strong>Деталі:</strong> {{ instr.getDetails() }}</p>
+
+            <ion-chip color="success" *ngIf="isRentable(instr)">
+              <ion-label>Оренда: {{ instr.rentPricePerDay }} грн/день</ion-label>
+            </ion-chip>
+
+            <div class="button-group">
+              <ion-button expand="block" fill="solid" color="primary" (click)="buy(instr)">
+                🛍 Купити
+              </ion-button>
+
+              <ion-button
+                *ngIf="isRentable(instr)"
+                expand="block"
+                fill="outline"
+                color="success"
+                (click)="rent(instr)">
+                🛒 Орендувати
+              </ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

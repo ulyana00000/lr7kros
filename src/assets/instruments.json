@@ -1,0 +1,24 @@
+[
+    {
+      "type": "guitar",
+      "name": "Fender Stratocaster",
+      "price": 12000,
+      "guitarType": "електро",
+      "strings": 6
+    },
+    {
+      "type": "piano",
+      "name": "Casio CDP-135",
+      "price": 17000,
+      "keys": 88,
+      "mechanism": "цифрова"
+    },
+    {
+      "type": "drums",
+      "name": "Pearl Roadshow",
+      "price": 25000,
+      "pieces": 5,
+      "hasPedal": true
+    }
+  ]
+  

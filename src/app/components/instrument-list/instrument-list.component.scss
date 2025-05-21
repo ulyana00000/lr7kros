@@ -1,0 +1,86 @@
+/* ion-content {
+    --background: #f3f4f6; // світло-сірий фон
+    min-height: 100vh;
+  }
+  
+  ion-card {
+    background-color: #ffffff;
+    margin: 16px;
+    padding: 12px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+    ion-card-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #2c3e50;
+    }
+  
+    ion-card-subtitle {
+      font-size: 1rem;
+      color: #7f8c8d;
+    }
+  
+    ion-card-content {
+      font-size: 1rem;
+      color: #34495e;
+      padding-top: 8px;
+    }
+  
+    &:hover {
+      transform: scale(1.03);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+  }
+  
+  
+  ion-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  ion-grid {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // якщо хочеш вирівнювання
+  }
+
+  .animated-title {
+    width: 100%;
+    text-align: center;
+    animation: slideFadeIn 1s ease-in-out;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+  
+  @keyframes slideFadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  ion-grid {
+    padding-bottom: 140px;
+  }
+  ion-col {
+    display: flex;
+  }
+  
+  ion-card {
+    margin:4%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  
+   */
