@@ -9,6 +9,9 @@ import { InstrumentFactory } from '../../factory/InstrumentFactory';
 import { RouterModule } from '@angular/router';
 import { InstrumentFormComponent } from '../instrument-form/instrument-form.component';
 import { InstrumentEditComponent } from '../instrument-edit/instrument-edit.component';
+import { CategoryFilterService } from '../../services/category-filter.service';
+import { Observable } from 'rxjs';
+
 @Component({
   standalone: true,
   selector: 'app-instrument-list',
@@ -20,16 +23,44 @@ import { InstrumentEditComponent } from '../instrument-edit/instrument-edit.comp
 export class InstrumentListComponent implements OnInit {
   instruments: IInstrument[] = [];
 showEditor = false;
-
+filteredInstruments$: Observable<IInstrument[]>;
   toastOpen = false;
   toastMessage = '';
 
-  constructor(private service: InstrumentService) {}
+  constructor(
+    private service: InstrumentService,
+    private categoryFilterService: CategoryFilterService
+  ) {
+    this.filteredInstruments$ = this.categoryFilterService.getFilteredInstruments();
+  }
 
   ngOnInit() {
     this.service.getInstruments().subscribe((data) => {
       this.instruments = data;
     });
+  }
+  onRentToggle(value: boolean) {
+  this.categoryFilterService.setRentOnly(value);
+}
+private normalizeType(type: string): string {
+  const map: Record<string, string> = {
+    'Гітара': 'guitar',
+    'гітара': 'guitar',
+    'Піаніно': 'piano',
+    'піаніно': 'piano',
+    'Барабани': 'drums',
+    'барабани': 'drums'
+  };
+
+  return map[type.trim()] || type.toLowerCase();
+}
+
+
+ 
+
+
+  onCategoryChange(type: string) {
+    this.categoryFilterService.setCategory(type);
   }
 
 addInstrumentToList(data: any) {
@@ -44,11 +75,12 @@ addInstrumentToList(data: any) {
 
 
   const rawData = this.instruments.map(i => ({
-    name: i.getName(),
-    price: i.getPrice(),
-    type: mapType[i.getType()] || i.getType().toLowerCase(),
-    ...this.extractDetails(i)
-  }));
+  name: i.getName(),
+  price: i.getPrice(),
+  type: this.normalizeType(i.getType()),
+  ...this.extractDetails(i)
+}));
+
 
   this.service.saveInstruments(rawData).subscribe({
     next: () => console.log('✅ Дані оновлено на сервері'),
@@ -59,19 +91,20 @@ addInstrumentToList(data: any) {
 extractDetails(instr: any): any {
   if (instr.getType() === 'Гітара') {
     return {
-      guitarType: instr.guitarType || '',
+      guitarType: instr.guitarType || 'Акустична',
       strings: instr.strings || 6,
       rentPricePerDay: instr.rentPricePerDay
     };
   }
 
-  if (instr.getType() === 'Піаніно') {
-    return {
-      keys: instr.keys || 88,
-      mechanism: instr.mechanism || '',
-      rentPricePerDay: instr.rentPricePerDay
-    };
-  }
+  if (instr.getType() === 'Піаніно' || this.normalizeType(instr.getType()) === 'piano') {
+  return {
+    keys: instr.keys ?? 88,
+    mechanism: instr.mechanism ?? 'Класична',
+    rentPricePerDay: instr.rentPricePerDay ?? null
+  };
+}
+
 
   if (instr.getType() === 'Барабани') {
     return {

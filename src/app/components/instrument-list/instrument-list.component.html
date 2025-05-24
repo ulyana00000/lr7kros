@@ -15,10 +15,29 @@
 </app-instrument-edit>
 
 
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>🎯 Обрати категорію</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-select (ionChange)="onCategoryChange($event.detail.value)">
+    
+      
+      <ion-select-option value="all">Усі</ion-select-option>
+      <ion-select-option value="guitar">Гітари</ion-select-option>
+      <ion-select-option value="piano">Піаніно</ion-select-option>
+      <ion-select-option value="drums">Барабани</ion-select-option>
+    </ion-select>
+  </ion-card-content>
+</ion-card>
   <!-- Список інструментів -->
+   <ion-item lines="none" class="ion-margin-top">
+      <ion-label>Тільки з орендою</ion-label>
+      <ion-toggle (ionChange)="onRentToggle($event.detail.checked)"></ion-toggle>
+    </ion-item>
   <ion-grid>
     <ion-row class="ion-justify-content-center">
-      <ion-col size="12" size-md="6" size-lg="4" *ngFor="let instr of instruments">
+      <ion-col size="12" size-md="6" size-lg="4" *ngFor="let instr of filteredInstruments$ | async">
         <ion-card>
           <ion-card-header>
             <ion-card-title>{{ instr.getName() }}</ion-card-title>
