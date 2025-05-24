@@ -7,10 +7,6 @@
 <ion-content fullscreen class="ion-padding">
   <app-instrument-form (addInstrument)="addInstrumentToList($event)"></app-instrument-form>
 
-  <!-- Кнопка-перемикач -->
-  <ion-button expand="block" color="warning" (click)="showEditor = !showEditor">
-    ✏️ {{ showEditor ? 'Сховати редагування' : 'Редагувати інструменти' }}
-  </ion-button>
 
   <app-instrument-edit
   *ngIf="instruments.length"
